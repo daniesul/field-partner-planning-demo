@@ -1,0 +1,233 @@
+@import 'tailwindcss';
+
+/* ── Design tokens ─────────────────────────────────────────────────────────
+   Original identity: editorial, high-contrast, near-monochrome with a single
+   restrained lime accent reserved for selections and performance gaps. */
+@theme {
+  --color-ink: #111111;
+  --color-white: #ffffff;
+  --color-paper: #f5f5f0;
+  --color-line: #e5e5e0;
+  --color-mute: #737373;
+  --color-soft: #a8a8a0;
+  --color-lime: #e3f16b;
+  --color-lime-deep: #b9c93a;
+  --color-alert: #b42318;
+
+  --font-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --breakpoint-xs: 30rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  ::selection {
+    background: var(--color-lime);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+}
+
+/* Reusable primitives. Tailwind v4: custom classes used with @apply or variants
+   must be declared with @utility. */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-mute);
+}
+@utility num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: var(--btn-h, 2.5rem);
+  padding-inline: var(--btn-px, 1rem);
+  font-family: var(--font-mono);
+  font-size: var(--btn-fs, 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--color-ink);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 150ms, color 150ms;
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+@utility btn-sm {
+  --btn-h: 2rem;
+  --btn-px: 0.75rem;
+  --btn-fs: 11px;
+}
+@utility btn-solid {
+  @apply btn;
+  background: var(--color-ink);
+  color: var(--color-white);
+  &:hover:not(:disabled) {
+    background: #2a2a2a;
+  }
+}
+@utility btn-ghost {
+  @apply btn;
+  background: transparent;
+  color: var(--color-ink);
+  &:hover:not(:disabled) {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+}
+@utility btn-lime {
+  @apply btn;
+  background: var(--color-lime);
+  color: var(--color-ink);
+  &:hover:not(:disabled) {
+    background: var(--color-lime-deep);
+  }
+}
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-width: 1px;
+  white-space: nowrap;
+}
+@utility field {
+  height: 2.5rem;
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  padding-inline: 0.75rem;
+  font-size: 0.875rem;
+  outline: none;
+  border-radius: 0;
+  &:focus {
+    border-color: var(--color-ink);
+  }
+}
+@utility select {
+  @apply field;
+  appearance: none;
+  padding-right: 2rem;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23111' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-position: right 0.75rem center;
+}
+@utility hatch {
+  background-image: repeating-linear-gradient(135deg, var(--color-ink) 0 1px, transparent 1px 5px);
+}
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  .tbl {
+    width: 100%;
+    text-align: left;
+    font-size: 13px;
+    border-collapse: collapse;
+  }
+  .tbl th {
+    @apply eyebrow;
+    font-weight: 500;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--color-ink);
+    white-space: nowrap;
+    background: var(--color-paper);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .tbl td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--color-line);
+    vertical-align: top;
+  }
+  .tbl tbody tr {
+    transition: background-color 150ms;
+  }
+  .tbl tbody tr.clickable {
+    cursor: pointer;
+  }
+  .tbl tbody tr.clickable:hover {
+    background: var(--color-white);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes fade-up {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.anim-slide {
+  animation: slide-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.anim-fade {
+  animation: fade-up 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.bar-anim {
+  transition: width 420ms cubic-bezier(0.2, 0.8, 0.2, 1), left 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-slide,
+  .anim-fade {
+    animation: none;
+  }
+  .bar-anim {
+    transition: none;
+  }
+}
