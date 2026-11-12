@@ -192,7 +192,7 @@ export function Approvals() {
       <ViewHeader
         index="03"
         title="Investment approval workflow"
-        lede="Every request follows the same governance path before money is committed. Reviewers see the strategic case, the funding source and the forecast return side by side — and the effect of a decision on budget and pipeline before they make it."
+        lede="Every request follows the same governance path before investment is committed. Reviewers see the strategic case, the funding source and the forecast return side by side — and the effect of a decision on budget and pipeline before they make it."
       />
       <FilterBar />
 

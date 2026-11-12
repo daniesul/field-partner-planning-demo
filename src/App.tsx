@@ -34,7 +34,7 @@ export default function App() {
   }, []);
   useEffect(() => {
     const r = ROUTES.find((x) => x.id === route)!;
-    document.title = `${r.label} — Fieldplan · Portfolio demo`;
+    document.title = `${r.label} — Field & Partner Planning · Portfolio demo`;
   }, [route]);
 
   const View = VIEWS[route];

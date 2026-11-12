@@ -69,7 +69,7 @@ export function Shell({ route, children }: { route: Route; children: ReactNode }
       <footer className="mt-16 border-t border-ink">
         <div className="px-5 md:px-10 max-w-[1600px] mx-auto py-10 grid gap-6 md:grid-cols-[1fr_auto] items-end">
           <div>
-            <div className="display text-[40px] md:text-[64px]">Fieldplan</div>
+            <div className="display text-[40px] md:text-[64px]">Field &amp; Partner Planning</div>
             <p className="text-[13px] text-mute max-w-2xl mt-3 leading-relaxed">
               A portfolio visualization of a global field &amp; partner marketing planning framework. The methodology and operating model are
               original work; every initiative, partner, person, budget, target and pipeline figure shown here is fictional. Changes you make
