@@ -27,8 +27,7 @@ export function Shell({ route, children }: { route: Route; children: ReactNode }
         </div>
         <nav className="h-14 md:h-16 border-b border-ink flex items-stretch" aria-label="Primary">
           <a href="#overview" className="hidden md:flex items-center gap-3 px-6 lg:px-10 border-r border-ink shrink-0">
-            <span className="display text-[22px] tracking-[-0.03em]">Fieldplan</span>
-            <span className="eyebrow hidden xl:inline">Global Field &amp; Partner Marketing</span>
+            <span className="display text-[22px] tracking-[-0.03em]">Field &amp; Partner Planning</span>
           </a>
           <div className="flex-1 flex overflow-x-auto no-scrollbar">
             {ROUTES.map((r) => {

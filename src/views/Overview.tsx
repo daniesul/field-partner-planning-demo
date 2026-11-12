@@ -7,8 +7,8 @@ import { useStore } from '../state/store';
 import { QUARTERS, REGION_LABEL, REGIONS } from '../types/models';
 
 const PILLARS = [
-  { n: '01', t: 'Strategic planning', d: 'One register for every global and regional initiative, categorised and tiered against business objectives.', href: '#initiatives' },
-  { n: '02', t: 'Investment governance', d: 'A standard request → review → decision workflow before money is committed.', href: '#approvals' },
+  { n: '01', t: 'Strategic planning', d: 'One view for every global and regional initiative, categorised and tiered against business objectives.', href: '#initiatives' },
+  { n: '02', t: 'Investment governance', d: 'A standard request → review → decision workflow before investment is committed.', href: '#approvals' },
   { n: '03', t: 'Financial accountability', d: 'Approved plans reconciled to POs and actual spend, by region and budget source.', href: '#budget' },
   { n: '04', t: 'Demand forecasting', d: 'Every initiative carries an MQL and pipeline forecast that rolls up to targets.', href: '#pipeline' },
   { n: '05', t: 'Leadership visibility', d: 'Executives see coverage, gaps and investment mix — filtered any way they need.', href: '#overview' },
@@ -17,7 +17,6 @@ const PILLARS = [
 function Intro() {
   return (
     <section className="pt-12 md:pt-20 pb-12 md:pb-16 border-b border-ink">
-      <div className="eyebrow mb-6">Case study · Senior Director, Global Field &amp; Partner Marketing</div>
       <h1 className="display text-[34px] xs:text-[52px] md:text-[96px] xl:text-[132px] max-w-[16ch] break-words">
         From fragmented planning to <span className="bg-lime px-2 -mx-1 box-decoration-clone">pipeline accountability</span>
       </h1>
