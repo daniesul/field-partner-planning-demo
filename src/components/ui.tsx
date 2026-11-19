@@ -10,10 +10,10 @@ import type { Initiative } from '../types/models';
 
 export function ViewHeader({ index, title, lede, children }: { index: string; title: string; lede: string; children?: ReactNode }) {
   return (
-    <header data-tour="view-header" className="pt-10 pb-8 md:pt-16 md:pb-10 border-b border-ink">
+    <header data-tour="view-header" className="pt-8 pb-6 md:pt-12 md:pb-8 border-b border-ink">
       <div className="eyebrow mb-4">View {index} / 05</div>
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-        <h1 className="display text-[44px] xs:text-[56px] md:text-[84px] xl:text-[104px] max-w-[14ch]">{title}</h1>
+        <h1 className="display text-[32px] xs:text-[42px] md:text-[56px] xl:text-[72px] max-w-[20ch]">{title}</h1>
         <div className="max-w-md lg:pb-2">
           <p className="text-[15px] leading-relaxed text-[#3a3a3a]">{lede}</p>
           {children}
