@@ -8,6 +8,9 @@ export function track(name: string, params?: Record<string, string | number>): v
   try {
     const gtag = (window as unknown as { gtag?: Gtag }).gtag;
     if (typeof gtag === 'function') gtag('event', name, params);
+    // Outreach alerts (public/outreach.js); the busiest tour events stay GA-only.
+    const outreach = (window as unknown as { dsOutreach?: (n: string, p?: Record<string, string | number>) => void }).dsOutreach;
+    if (typeof outreach === 'function' && name !== 'tour_step' && name !== 'tour_invite_shown') outreach(name, params);
   } catch {
     /* ignore */
   }
