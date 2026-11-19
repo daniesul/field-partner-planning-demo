@@ -16,11 +16,11 @@ const PILLARS = [
 
 function Intro() {
   return (
-    <section className="pt-12 md:pt-20 pb-12 md:pb-16 border-b border-ink">
-      <h1 className="display text-[34px] xs:text-[52px] md:text-[96px] xl:text-[132px] max-w-[16ch] break-words">
+    <section className="pt-10 md:pt-14 pb-10 md:pb-12 border-b border-ink">
+      <h1 data-tour="hero" className="display text-[30px] xs:text-[40px] md:text-[60px] xl:text-[84px] max-w-[24ch] break-words">
         From fragmented planning to <span className="bg-lime px-2 -mx-1 box-decoration-clone">pipeline accountability</span>
       </h1>
-      <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 mt-10 md:mt-14">
+      <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 mt-8 md:mt-10">
         <div className="space-y-5 text-[16px] md:text-[18px] leading-relaxed max-w-2xl">
           <p>
             Designed and implemented a global planning framework connecting marketing initiatives, investment approvals, budget allocation, and
@@ -42,7 +42,7 @@ function Intro() {
           </p>
         </div>
       </div>
-      <ol className="grid sm:grid-cols-2 lg:grid-cols-5 gap-px bg-line border border-line mt-12">
+      <ol className="grid sm:grid-cols-2 lg:grid-cols-5 gap-px bg-line border border-line mt-10">
         {PILLARS.map((p) => (
           <li key={p.n}>
             <a href={p.href} className="group block h-full bg-paper hover:bg-white p-5 transition-colors">
@@ -89,13 +89,13 @@ export function Overview() {
   return (
     <>
       <Intro />
-      <header className="pt-12 md:pt-16 pb-6">
+      <header className="pt-10 md:pt-12 pb-6">
         <div className="eyebrow mb-4">View 01 / 05 · FY27 · as of {dataset.asOf}</div>
-        <h2 className="display text-[36px] xs:text-[52px] md:text-[80px] xl:text-[96px] max-w-[18ch]">Global investment &amp; pipeline overview</h2>
+        <h2 className="display text-[28px] xs:text-[38px] md:text-[52px] xl:text-[64px] max-w-[26ch]">Global investment &amp; pipeline overview</h2>
       </header>
       <FilterBar />
 
-      <div className="mt-8">
+      <div data-tour="kpis" className="mt-8">
         <KpiGrid>
           <Kpi label="Planned initiatives" value={count(m.totalInitiatives)} sub="In scope of current filters" />
           <Kpi label="Pending approval" value={count(m.pendingApproval)} sub={`${moneyShort(m.proposedInvestment)} requested, incl. drafts`} tone={m.pendingApproval ? 'lime' : 'default'} />

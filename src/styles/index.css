@@ -231,3 +231,23 @@
     transition: none;
   }
 }
+
+/* Guided tour: the spotlight and card glide between steps. */
+.tour-hole {
+  transition:
+    top 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    left 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.tour-pop {
+  transition:
+    top 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    left 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tour-hole,
+  .tour-pop {
+    transition: none;
+  }
+}

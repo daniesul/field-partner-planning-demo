@@ -10,10 +10,10 @@ import type { Initiative } from '../types/models';
 
 export function ViewHeader({ index, title, lede, children }: { index: string; title: string; lede: string; children?: ReactNode }) {
   return (
-    <header className="pt-10 pb-8 md:pt-16 md:pb-10 border-b border-ink">
+    <header data-tour="view-header" className="pt-8 pb-6 md:pt-12 md:pb-8 border-b border-ink">
       <div className="eyebrow mb-4">View {index} / 05</div>
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-        <h1 className="display text-[44px] xs:text-[56px] md:text-[84px] xl:text-[104px] max-w-[14ch]">{title}</h1>
+        <h1 className="display text-[32px] xs:text-[42px] md:text-[56px] xl:text-[72px] max-w-[20ch]">{title}</h1>
         <div className="max-w-md lg:pb-2">
           <p className="text-[15px] leading-relaxed text-[#3a3a3a]">{lede}</p>
           {children}
@@ -23,9 +23,24 @@ export function ViewHeader({ index, title, lede, children }: { index: string; ti
   );
 }
 
-export function Section({ title, kicker, aside, children, className = '' }: { title: string; kicker?: string; aside?: ReactNode; children: ReactNode; className?: string }) {
+export function Section({
+  title,
+  kicker,
+  aside,
+  children,
+  className = '',
+  tour,
+}: {
+  title: string;
+  kicker?: string;
+  aside?: ReactNode;
+  children: ReactNode;
+  className?: string;
+  /** Marks the section as a guided-tour target (data-tour). */
+  tour?: string;
+}) {
   return (
-    <section className={`min-w-0 py-10 md:py-14 border-b border-line ${className}`}>
+    <section data-tour={tour} className={`min-w-0 py-10 md:py-14 border-b border-line ${className}`}>
       <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
         <div>
           {kicker && <div className="eyebrow mb-2">{kicker}</div>}
@@ -118,7 +133,7 @@ export function FilterBar({ keys = ['quarter', 'region', 'source', 'category', '
   const { filters, setFilters, clearFilters } = useStore();
   const active = keys.filter((k) => filters[k] !== 'All');
   return (
-    <div className="sticky top-[var(--nav-h)] z-20 -mx-5 md:-mx-10 px-5 md:px-10 py-3 bg-paper/95 backdrop-blur border-b border-line">
+    <div data-tour="filters" className="sticky top-[var(--nav-h)] z-20 -mx-5 md:-mx-10 px-5 md:px-10 py-3 bg-paper/95 backdrop-blur border-b border-line">
       <div className="flex flex-wrap items-end gap-2 md:gap-3">
         {keys.map((k) => (
           <label key={k} className="flex-1 min-w-[140px] max-w-[220px]">

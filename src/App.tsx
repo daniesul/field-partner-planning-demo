@@ -2,6 +2,7 @@ import { useEffect, useState, type ComponentType } from 'react';
 import { InitiativePanel } from './components/InitiativePanel';
 import { ROUTES, Shell, type Route } from './components/Shell';
 import { StoreProvider } from './state/store';
+import { TourProvider } from './tour/Tour';
 import { Approvals } from './views/Approvals';
 import { Budget } from './views/Budget';
 import { Overview } from './views/Overview';
@@ -40,10 +41,12 @@ export default function App() {
   const View = VIEWS[route];
   return (
     <StoreProvider>
-      <Shell route={route}>
-        <View key={route} />
-      </Shell>
-      <InitiativePanel />
+      <TourProvider>
+        <Shell route={route}>
+          <View key={route} />
+        </Shell>
+        <InitiativePanel />
+      </TourProvider>
     </StoreProvider>
   );
 }

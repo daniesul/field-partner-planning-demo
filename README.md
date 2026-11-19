@@ -59,9 +59,19 @@ src/
   state/store.tsx          React context: dataset, filters, decisions, finance updates, reset
   components/              Shell, filters, KPI tiles, chips, chart primitives, detail panel
   views/                   One file per view
+  tour/                    Optional guided tour: steps.ts (the script), Tour.tsx (invite + spotlight), analytics.ts
   styles/index.css         Tailwind v4 theme tokens and component utilities
 scripts/generate-data.ts   Seeded synthetic data generator
 ```
+
+### Guided tour
+
+A short, skippable walkthrough: a card invites first-time visitors (once per session) and a **Guided tour** button in the header restarts it. Each step switches to its view, spotlights one element and explains it; the Approvals step waits for the visitor to make a real decision.
+
+- **Edit the wording or order** in `src/tour/steps.ts`. Each step has a stable `id`, a `route`, a CSS `target`, a `title` and a `body`.
+- **Targets** are `data-tour="…"` attributes on the highlighted elements (`nav`, `filters`, `hero`, `kpis`, `view-header`, `approve-featured`, `reconcile`, `coverage-matrix`). Add the attribute to a new element, then point a step at it. A step whose target can't be found falls back to a centred card.
+- **Analytics** (GA4, when the gtag snippet is present): `tour_invite_shown`, `tour_start` (`tour_source`: invite or button), `tour_step` (`step_index`, `step_id`), `tour_skip`, `tour_complete`, `tour_decline`. Register `step_id`, `step_index` and `tour_source` as event-scoped custom dimensions to report on them.
+- Starting the tour resets the demo data and filters so the Approvals step always has a request to approve.
 
 ### How the model maps to the original workbook
 
