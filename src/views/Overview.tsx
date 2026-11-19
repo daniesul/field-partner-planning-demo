@@ -17,7 +17,7 @@ const PILLARS = [
 function Intro() {
   return (
     <section className="pt-12 md:pt-20 pb-12 md:pb-16 border-b border-ink">
-      <h1 className="display text-[34px] xs:text-[52px] md:text-[96px] xl:text-[132px] max-w-[16ch] break-words">
+      <h1 data-tour="hero" className="display text-[34px] xs:text-[52px] md:text-[96px] xl:text-[132px] max-w-[16ch] break-words">
         From fragmented planning to <span className="bg-lime px-2 -mx-1 box-decoration-clone">pipeline accountability</span>
       </h1>
       <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 mt-10 md:mt-14">
@@ -95,7 +95,7 @@ export function Overview() {
       </header>
       <FilterBar />
 
-      <div className="mt-8">
+      <div data-tour="kpis" className="mt-8">
         <KpiGrid>
           <Kpi label="Planned initiatives" value={count(m.totalInitiatives)} sub="In scope of current filters" />
           <Kpi label="Pending approval" value={count(m.pendingApproval)} sub={`${moneyShort(m.proposedInvestment)} requested, incl. drafts`} tone={m.pendingApproval ? 'lime' : 'default'} />

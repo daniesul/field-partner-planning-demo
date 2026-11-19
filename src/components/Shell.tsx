@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
-import { LuRotateCcw } from 'react-icons/lu';
+import { LuCompass, LuRotateCcw } from 'react-icons/lu';
 import { useStore } from '../state/store';
 import { isPending } from '../lib/calculations';
+import { useTour } from '../tour/Tour';
 
 export type Route = 'overview' | 'initiatives' | 'approvals' | 'budget' | 'pipeline';
 
@@ -15,6 +16,7 @@ export const ROUTES: { id: Route; num: string; label: string; short: string }[] 
 
 export function Shell({ route, children }: { route: Route; children: ReactNode }) {
   const { reset, isModified, initiatives } = useStore();
+  const { start } = useTour();
   const queue = initiatives.filter((i) => isPending(i) && i.approvalStatus !== 'Draft').length;
   return (
     <div className="min-h-screen [--nav-h:88px] md:[--nav-h:96px]">
@@ -25,7 +27,7 @@ export function Shell({ route, children }: { route: Route; children: ReactNode }
             Portfolio demonstration — synthetic data
           </span>
         </div>
-        <nav className="h-14 md:h-16 border-b border-ink flex items-stretch" aria-label="Primary">
+        <nav data-tour="nav" className="h-14 md:h-16 border-b border-ink flex items-stretch" aria-label="Primary">
           <a href="#overview" className="hidden md:flex items-center gap-3 px-6 lg:px-10 border-r border-ink shrink-0">
             <span className="display text-[22px] tracking-[-0.03em]">Field &amp; Partner Planning</span>
           </a>
@@ -53,6 +55,15 @@ export function Shell({ route, children }: { route: Route; children: ReactNode }
               );
             })}
           </div>
+          <button
+            onClick={() => start('button')}
+            className="shrink-0 flex items-center gap-2 px-4 md:px-6 border-l border-ink font-mono text-[11px] uppercase tracking-[0.08em] transition-colors hover:bg-white"
+            title="Take a short guided tour"
+            aria-label="Guided tour"
+          >
+            <LuCompass aria-hidden className="text-[14px]" />
+            <span className="hidden sm:inline">Guided tour</span>
+          </button>
           <button
             onClick={reset}
             className={`shrink-0 flex items-center gap-2 px-4 md:px-6 border-l border-ink font-mono text-[11px] uppercase tracking-[0.08em] transition-colors ${

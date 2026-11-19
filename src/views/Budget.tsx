@@ -178,7 +178,7 @@ export function Budget() {
         )}
       </Section>
 
-      <Section title="Reconciliation example" kicker="Approved $25,000 · executed for $21,000">
+      <Section tour="reconcile" title="Reconciliation example" kicker="Approved $25,000 · executed for $21,000">
         <div className="grid lg:grid-cols-[1.1fr_1fr] gap-px bg-line border border-ink">
           <div className="bg-white p-6 md:p-8">
             <div className="flex flex-wrap items-center gap-2 mb-3">

@@ -72,7 +72,7 @@ export function Pipeline() {
       />
       <FilterBar />
 
-      <Section title="Coverage matrix" kicker="Approved new-pipeline forecast ÷ target · select a cell">
+      <Section tour="coverage-matrix" title="Coverage matrix" kicker="Approved new-pipeline forecast ÷ target · select a cell">
         <div className="mb-4 flex flex-wrap gap-x-6 gap-y-2 text-[12px] text-[#3a3a3a]">
           <span className="inline-flex items-center gap-2">
             <span className="w-3.5 h-3.5 bg-lime border border-ink" /> Under-covered (&lt; {pct(UNDER)})

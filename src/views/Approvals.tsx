@@ -157,7 +157,11 @@ function QueueCard({ i }: { i: Initiative }) {
       </div>
 
       <div className="p-4 md:px-6 flex flex-wrap gap-2 border-t border-line">
-        <button className="btn-solid" onClick={() => decide(i.id, 'approve')}>
+        <button
+          className="btn-solid"
+          data-tour={i.id === dataset.featured.pipelineExampleId ? 'approve-featured' : undefined}
+          onClick={() => decide(i.id, 'approve')}
+        >
           <LuCheck /> Approve
         </button>
         <button className="btn-ghost" onClick={() => decide(i.id, 'reject')}>
