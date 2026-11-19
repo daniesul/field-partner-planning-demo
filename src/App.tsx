@@ -3,6 +3,7 @@ import { InitiativePanel } from './components/InitiativePanel';
 import { ROUTES, Shell, type Route } from './components/Shell';
 import { StoreProvider } from './state/store';
 import { TourProvider } from './tour/Tour';
+import { track } from './tour/analytics';
 import { Approvals } from './views/Approvals';
 import { Budget } from './views/Budget';
 import { Overview } from './views/Overview';
@@ -36,6 +37,7 @@ export default function App() {
   useEffect(() => {
     const r = ROUTES.find((x) => x.id === route)!;
     document.title = `${r.label} — Field & Partner Planning · Portfolio demo`;
+    track('demo_view', { section_name: r.label });
   }, [route]);
 
   const View = VIEWS[route];

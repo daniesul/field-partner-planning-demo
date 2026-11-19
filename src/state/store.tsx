@@ -10,6 +10,7 @@ import {
   type WorkflowAction,
 } from '../lib/calculations';
 import { moneyShort, pct } from '../lib/format';
+import { track } from '../tour/analytics';
 import type { Dataset, Filters, Initiative } from '../types/models';
 import { EMPTY_FILTERS, REGION_LABEL } from '../types/models';
 
@@ -52,6 +53,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const before = dataset.initiatives;
       const target = before.find((i) => i.id === id);
       if (!target) return;
+      track('demo_decision', { section_name: action, item_name: target.name });
       const after = applyWorkflow(before, id, action);
       const scope: Filters = { ...EMPTY_FILTERS, region: target.region, quarter: target.quarter };
       const b = pipelineCell(dataset, before, scope);

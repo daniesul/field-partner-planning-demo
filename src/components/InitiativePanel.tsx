@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { LuCheck, LuSend, LuX, LuEye, LuTriangleAlert, LuUndo2 } from 'react-icons/lu';
 import { useStore } from '../state/store';
+import { track } from '../tour/analytics';
 import {
   ALLOWED_ACTIONS,
   allocate,
@@ -76,6 +77,11 @@ export function InitiativePanel() {
       document.body.style.overflow = '';
     };
   }, [initiative, openInitiative]);
+
+  // Count each opening once (not again when the open initiative's data changes).
+  useEffect(() => {
+    if (selectedId) track('demo_initiative_open', { item_name: initiative?.name ?? selectedId });
+  }, [selectedId]);
 
   if (!initiative) return null;
   return (
