@@ -11,7 +11,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type ReactNode,
 } from 'react';
-import { LuArrowLeft, LuArrowRight, LuX } from 'react-icons/lu';
+import { LuArrowLeft, LuArrowRight, LuMinus, LuX } from 'react-icons/lu';
 import { useStore } from '../state/store';
 import { track } from './analytics';
 import { STEPS } from './steps';
@@ -195,6 +195,7 @@ function TourOverlay({
 
   const [rect, setRect] = useState<Box | null>(null);
   const [missing, setMissing] = useState(false);
+  const [minimized, setMinimized] = useState(false); // hides the card and the dimming so the visitor can look at the page
   const [size, setSize] = useState({ w: 360, h: 240 });
   const [vp, setVp] = useState({ w: window.innerWidth, h: window.innerHeight });
   const popRef = useRef<HTMLDivElement>(null);
@@ -289,6 +290,11 @@ function TourOverlay({
     return () => window.clearTimeout(t);
   }, [decided, index, setIndex]);
 
+  // Every step opens with the card showing.
+  useEffect(() => {
+    setMinimized(false);
+  }, [index]);
+
   // Escape ends the tour from anywhere on the page.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -313,7 +319,7 @@ function TourOverlay({
   // Move keyboard focus to the card when a step appears.
   useEffect(() => {
     if (ready) popRef.current?.focus({ preventScroll: true });
-  }, [index, ready]);
+  }, [index, ready, minimized]);
 
   const mobile = vp.w < 640;
   let style: CSSProperties;
@@ -356,14 +362,37 @@ function TourOverlay({
     }
   };
 
-  const next = () => (isLast ? onClose(true, index) : setIndex(index + 1));
+  /** Last step: end the tour and land on the first page, so the visitor starts exploring from the top. */
+  const exploreNow = () => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.location.hash = '#overview';
+    onClose(true, index);
+  };
+  const next = () => (isLast ? exploreNow() : setIndex(index + 1));
   const waiting = interactive && !decided;
+
+  // Steps that ask the visitor to act don't dim the page at all (just a ring around the target), so they can
+  // read what they changed. Read-only steps dim lightly. "Hide" removes the card and any dimming.
+  const dim = handsOn ? 0 : 0.45;
+
+  if (minimized) {
+    return (
+      <button
+        autoFocus
+        className="fixed z-[70] right-3 bottom-3 sm:right-6 sm:bottom-6 h-10 px-4 bg-ink text-white border border-ink font-mono text-[11px] uppercase tracking-[0.08em] shadow-[4px_4px_0_0_var(--color-lime)]"
+        aria-label={`Show the tour again, step ${index + 1} of ${STEPS.length}`}
+        onClick={() => setMinimized(false)}
+      >
+        Step {index + 1} / {STEPS.length} · Show tour
+      </button>
+    );
+  }
 
   return (
     <>
       {!handsOn && <div className="fixed inset-0 z-[59]" aria-hidden />}
       {centered ? (
-        <div className="fixed inset-0 z-[60] bg-ink/60 pointer-events-none" aria-hidden />
+        dim > 0 && <div className="fixed inset-0 z-[60] pointer-events-none" style={{ background: `rgba(17, 17, 17, ${dim})` }} aria-hidden />
       ) : (
         <div
           className="tour-hole fixed z-[60] pointer-events-none"
@@ -373,8 +402,8 @@ function TourOverlay({
             left: rect!.left - PAD,
             width: rect!.width + PAD * 2,
             height: rect!.height + PAD * 2,
-            outline: '3px solid var(--color-lime)',
-            boxShadow: '0 0 0 9999px rgba(17, 17, 17, 0.62)',
+            outline: dim > 0 ? '3px solid var(--color-lime)' : '2px solid var(--color-ink)',
+            boxShadow: dim > 0 ? `0 0 0 9999px rgba(17, 17, 17, ${dim})` : '0 0 0 5px var(--color-lime)',
           }}
         />
       )}
@@ -393,9 +422,14 @@ function TourOverlay({
           <span className="eyebrow !text-ink">
             Step {index + 1} / {STEPS.length}
           </span>
-          <button className="p-1 -mr-1 hover:bg-paper" aria-label="End tour" onClick={() => onClose(false, index)}>
-            <LuX aria-hidden />
-          </button>
+          <div className="flex items-center gap-1 -mr-1">
+            <button className="p-1 hover:bg-paper" aria-label="Hide the card to see the page" title="Hide the card to see the page" onClick={() => setMinimized(true)}>
+              <LuMinus aria-hidden />
+            </button>
+            <button className="p-1 hover:bg-paper" aria-label="End tour" title="End tour" onClick={() => onClose(false, index)}>
+              <LuX aria-hidden />
+            </button>
+          </div>
         </div>
         <div className="flex gap-1 px-5 mt-3" aria-hidden>
           {STEPS.map((s, i) => (
@@ -441,7 +475,7 @@ function TourOverlay({
             <LuArrowLeft aria-hidden /> Back
           </button>
           <button className={`${waiting ? 'btn-ghost' : 'btn-solid'} btn-sm ml-auto`} onClick={next} disabled={decided}>
-            {waiting ? 'Skip step' : isLast ? 'Finish' : 'Next'}
+            {waiting ? 'Skip step' : isLast ? 'Explore now' : 'Next'}
             {!isLast && <LuArrowRight aria-hidden />}
           </button>
         </div>

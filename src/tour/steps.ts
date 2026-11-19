@@ -95,7 +95,7 @@ export const STEPS: TourStep[] = [
     id: 'wrap-up',
     route: 'pipeline',
     title: 'That’s the tour',
-    body: 'Keep exploring, or use Reset demo to replay it. Nothing you changed is saved.',
+    body: 'Explore the full demo on your own, or use Reset demo to start over. Nothing you changed is saved.',
     link: { label: 'Read the case study', href: 'https://danielsullivanportfolio.com/global-planning-framework' },
   },
 ];
